@@ -1,6 +1,11 @@
 import mysql.connector
 import tkinter as tk
 from tkinter import messagebox
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from VentanaPrincipal.VentanaPrincipalGestion import VentanaPrincipalGestionInventario
+
 
 # Conexión a la base de datos
 conexion1 = mysql.connector.connect(
@@ -22,12 +27,20 @@ def login():
     
     if result and result[0] == contraseña:
         messagebox.showinfo('Bienvenido!', 'Bienvenido al Sistema. Contraseña Correcta')
+        ventana.destroy()  # Cerramos la ventana de login
+        abrir_ventana_principal()
     else:
         nombre_entry.delete(0, tk.END)
         correo_entry.delete(0, tk.END)
         messagebox.showerror('Advertencia...!', 'Contraseña Incorrecta')
     
     cursor1.close()
+
+
+# Función para abrir la ventana principal de gestión de inventario
+def abrir_ventana_principal():
+    ventana_principal = VentanaPrincipalGestionInventario()
+    ventana_principal.iniciar()
 
 # Función para abrir la ventana de registro
 def abrir_ventana_registro():
@@ -77,8 +90,12 @@ ventana.geometry("414x896")
 ventana.resizable(width=False, height=False)
 
 # Fondo de la ventana
-fondo = tk.PhotoImage(file="LoginR.png")
-fondo1 = tk.Label(ventana, image=fondo).place(x=0, y=0, relwidth=1, relheight=1)
+ruta_imagen = "InicioSesion/LoginR.png"
+if not os.path.exists(ruta_imagen):
+    print(f"Advertencia: No se encontró el archivo {ruta_imagen}")
+else:
+    fondo = tk.PhotoImage(file=ruta_imagen)
+    fondo1 = tk.Label(ventana, image=fondo).place(x=0, y=0, relwidth=1, relheight=1)
 
 # Campos de entrada
 nombre_entry = tk.Entry(textvariable=usuario, font=("Arial", 12), fg="White", bg="#474a4a", bd=0, highlightthickness=0)
