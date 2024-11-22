@@ -27,7 +27,7 @@ def login():
     
     if result and result[0] == contraseña:
         messagebox.showinfo('Bienvenido!', 'Bienvenido al Sistema. Contraseña Correcta')
-        ventana.destroy()  # Cerramos la ventana de login
+        ventana.withdraw()  # Cerramos la ventana de login
         abrir_ventana_principal()
     else:
         nombre_entry.delete(0, tk.END)
@@ -40,7 +40,7 @@ def login():
 # Función para abrir la ventana principal de gestión de inventario
 def abrir_ventana_principal():
     ventana_principal = VentanaPrincipalGestionInventario()
-    ventana_principal.iniciar()
+    ventana_principal.iniciar() 
 
 # Función para abrir la ventana de registro
 def abrir_ventana_registro():
